@@ -38,5 +38,19 @@ namespace OpenAPI_Call
         {
             MakeChatCall();
         }
+
+        private void txtPrompt_TextChanged(object sender, EventArgs e)
+        {
+            ;
+        }
+
+        private void txtPrompt_Enter(object sender, EventArgs e)
+        {
+            if (this.txtPrompt.Text == "Your text here...")
+            {
+                this.txtPrompt.Text = string.Empty;
+                txtPrompt.Update();
+            }
+        }
     }
 }
