@@ -23,6 +23,9 @@ namespace OpenAPI_Call
             _model = "gpt-3.5-turbo"; //if getting a lot of use, switch to a cheaper model
             _chatURL = "https://api.openai.com/v1/chat/completions";
             _contextId = string.Empty;
+
+            if (string.IsNullOrEmpty(_apiKey))
+                _apiKey = EncryptionHelper.GetOPENAPIKeyFromDisk();
         }
 
 
