@@ -1,0 +1,36 @@
+# Ignore Visual Studio files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vs/
+
+# Ignore build output
+bin/
+obj/
+
+# Ignore NuGet packages
+packages/
+
+# Ignore Resharper files
+_ReSharper*/
+*.resharper
+*.DotSettings
+
+# Ignore MSTest Test Results
+TestResults/
+
+# Ignore StyleCop files
+StyleCop.Cache
+
+# Ignore GhostDoc documentation
+~.ghostdoc.xml
+
+# Ignore miscellaneous files
+Thumbs.db
+*.log
+*.bak
+*.tmp
+*.cache
+*.snk
+*.pfx
