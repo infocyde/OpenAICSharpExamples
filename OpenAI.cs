@@ -13,12 +13,12 @@ namespace OpenAPI_Call
         private int _maxTokens { get; set; }
         private string _model { get; set;  }
         private string _chatURL { get; set; }
-        string _contextId { get; set; }
+        private string _contextId { get; set; }
 
 
         public OpenAI()
         {
-            _apiKey = ""; // collinz don't use
+            _apiKey = ""; // supply your own
             _maxTokens = 2048; //can be double
             _model = "gpt-3.5-turbo"; //if getting a lot of use, switch to a cheaper model
             _chatURL = "https://api.openai.com/v1/chat/completions";

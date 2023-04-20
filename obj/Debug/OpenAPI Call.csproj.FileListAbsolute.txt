@@ -11,3 +11,17 @@ C:\_repos\Experiments\OpenAPI Call\obj\Debug\OpenAPI Call.pdb
 C:\_repos\Experiments\OpenAPI Call\bin\Debug\Newtonsoft.Json.dll
 C:\_repos\Experiments\OpenAPI Call\bin\Debug\Newtonsoft.Json.xml
 C:\_repos\Experiments\OpenAPI Call\obj\Debug\OpenAPI Call.csproj.CopyComplete
+D:\_activeDev\OpenAICSharpExamples\bin\Debug\OpenAPI Call.exe.config
+D:\_activeDev\OpenAICSharpExamples\bin\Debug\OpenAPI Call.exe
+D:\_activeDev\OpenAICSharpExamples\bin\Debug\OpenAPI Call.pdb
+D:\_activeDev\OpenAICSharpExamples\bin\Debug\Newtonsoft.Json.dll
+D:\_activeDev\OpenAICSharpExamples\bin\Debug\Newtonsoft.Json.xml
+D:\_activeDev\OpenAICSharpExamples\obj\Debug\OpenAPI Call.csproj.AssemblyReference.cache
+D:\_activeDev\OpenAICSharpExamples\obj\Debug\OpenAPI Call.csproj.SuggestedBindingRedirects.cache
+D:\_activeDev\OpenAICSharpExamples\obj\Debug\OpenAPI_Call.Form1.resources
+D:\_activeDev\OpenAICSharpExamples\obj\Debug\OpenAPI_Call.Properties.Resources.resources
+D:\_activeDev\OpenAICSharpExamples\obj\Debug\OpenAPI Call.csproj.GenerateResource.cache
+D:\_activeDev\OpenAICSharpExamples\obj\Debug\OpenAPI Call.csproj.CoreCompileInputs.cache
+D:\_activeDev\OpenAICSharpExamples\obj\Debug\OpenAPI Call.csproj.CopyComplete
+D:\_activeDev\OpenAICSharpExamples\obj\Debug\OpenAPI Call.exe
+D:\_activeDev\OpenAICSharpExamples\obj\Debug\OpenAPI Call.pdb
