@@ -4,16 +4,49 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace OpenAPI_Call
 {
+
+    #region Json classes for the chunk streaming if streaming used
+    public class ChatCompletionChunk
+    {
+        public string Id { get; set; }
+        public string Object { get; set; }
+        public long Created { get; set; }
+        public string Model { get; set; }
+        public Choice[] Choices { get; set; }
+    }
+
+    public class Choice
+    {
+        public Delta Delta { get; set; }
+        public int Index { get; set; }
+        public string FinishReason { get; set; }
+    }
+
+    public class Delta
+    {
+        public string Role { get; set; }
+        public string Content { get; set; }
+    }
+    #endregion
+
+
+
     public class OpenAI : IDisposable
     {
         private string _apiKey { get; set; }
         private int _maxTokens { get; set; }
-        private string _model { get; set;  }
+        private string _model { get; set; }
         private string _chatURL { get; set; }
         private string _contextId { get; set; }
+        private bool _stream { get; set; }
+
+
+        public event EventHandler<string> MessageRaised;
 
 
         public OpenAI()
@@ -23,13 +56,14 @@ namespace OpenAPI_Call
             _model = "gpt-3.5-turbo"; //if getting a lot of use, switch to a cheaper model
             _chatURL = "https://api.openai.com/v1/chat/completions";
             _contextId = string.Empty;
+            _stream = true;
 
             if (string.IsNullOrEmpty(_apiKey))
                 _apiKey = EncryptionHelper.GetOPENAPIKeyFromDisk();
         }
 
 
-        public async Task<string> SimpleChatCall2(string sPrompt, bool bDump = false)
+        public async Task<bool> SimpleChatCall2(string sPrompt, bool bDump = false)
         {
             var messages = new List<Dictionary<string, string>>()
             {
@@ -49,7 +83,10 @@ namespace OpenAPI_Call
             var requestData = new
             {
                 messages = messages,
-                model =_model
+                model = _model,
+                max_tokens = _maxTokens,
+                stream = _stream
+
             };
 
             string requestBody = Newtonsoft.Json.JsonConvert.SerializeObject(requestData);
@@ -63,33 +100,71 @@ namespace OpenAPI_Call
                     Content = new StringContent(requestBody, Encoding.UTF8, "application/json")
                 };
 
-                // Send the request and get the response
-                HttpResponseMessage response = await httpClient.SendAsync(request);
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-                // Handle the response
-                if (response.IsSuccessStatusCode)
+                if (!_stream)
                 {
-                    // Parse the JSON response
-                    dynamic jsonResponse = Newtonsoft.Json.JsonConvert.DeserializeObject(responseBody);
-                    if (!bDump)
-                        return jsonResponse.choices[0].message.content;
+
+
+                    // Send the request and get the response
+                    HttpResponseMessage response = await httpClient.SendAsync(request);
+                    string responseBody = await response.Content.ReadAsStringAsync();
+
+                    // Handle the response
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Parse the JSON response
+                        dynamic jsonResponse = Newtonsoft.Json.JsonConvert.DeserializeObject(responseBody);
+                        if (!bDump)
+                            this.MessageRaised(null, jsonResponse.choices[0].message.content);
+                        else
+                        {
+                            string s = Utility.PrintJsonPropertiesAndValues(responseBody);
+                            this.MessageRaised(null,s);
+                        }
+
+                        // Process the completion as needed
+                        //Console.WriteLine("Completion: " + completion);
+
+                    }
                     else
                     {
-                        string s = Utility.PrintJsonPropertiesAndValues(responseBody);
-                        return s;
+                        // Handle the error response
+                        this.MessageRaised(null,"Error: " + responseBody);
                     }
-                       
-                    // Process the completion as needed
-                    //Console.WriteLine("Completion: " + completion);
-                   
                 }
                 else
                 {
-                    // Handle the error response
-                    return "Error: " + responseBody;
+
+                    string s = string.Empty;
+                    using (var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
+                    using (var stream = await response.Content.ReadAsStreamAsync())
+                    using (var reader = new StreamReader(stream))
+                        while (!reader.EndOfStream)
+                        {
+
+                            var jsonString = await reader.ReadLineAsync();
+                            if (!bDump)
+                            {
+                                if (string.IsNullOrEmpty(jsonString) || !jsonString.StartsWith("data: {"))
+                                    continue;
+                                string json = jsonString.Substring(jsonString.IndexOf('{'), jsonString.LastIndexOf('}') - jsonString.IndexOf('{') + 1);
+
+                                // Convert to object
+                                ChatCompletionChunk x = JsonConvert.DeserializeObject<ChatCompletionChunk>(json);
+
+                                //s += chatCompletionChunk.Choices[0].Delta.ToString();
+                                MessageRaised(null,x?.Choices[0]?.Delta?.Content);
+                            }
+                            else
+                            {
+                                MessageRaised(null, jsonString);
+                            }
+
+                        }
+
+                   
                 }
             }
+            return true;
 
         }
 

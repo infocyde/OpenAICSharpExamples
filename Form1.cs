@@ -26,7 +26,8 @@ namespace OpenAPI_Call
             txtResult.Update();
             using(OpenAI oa = new OpenAI())
             {
-                this.txtResult.Text = await oa.SimpleChatCall2(this.txtPrompt.Text, this.chkDumpClass.Checked);
+                oa.MessageRaised += (sender, message) => { this.txtResult.Text += message; this.txtResult.Update(); } ;
+                await oa.SimpleChatCall2(this.txtPrompt.Text, this.chkDumpClass.Checked);
             }
             btnSend.Text = "Sent!";
             btnSend.Update();
