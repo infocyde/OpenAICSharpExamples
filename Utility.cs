@@ -8,9 +8,23 @@ using Newtonsoft.Json.Linq;
 
 namespace OpenAPI_Call
 {
+    // not used
+    public static class StringExtensions
+    {
+        public static string ReplaceCrLfWithNewLine(this string str)
+        {
+            if (!string.IsNullOrEmpty(str))
+                return str.Replace("\\n", Environment.NewLine);
+            return str;
+        }
+    }
+
+
+
     public static class Utility
     {
 
+        
 
         public static string PrintJsonPropertiesAndValues(string json)
         {

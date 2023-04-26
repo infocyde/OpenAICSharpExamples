@@ -29,21 +29,11 @@ namespace OpenAPI_Call
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtResult = new System.Windows.Forms.TextBox();
             this.txtPrompt = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
             this.chkDumpClass = new System.Windows.Forms.CheckBox();
+            this.txtResult2 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
-            // 
-            // txtResult
-            // 
-            this.txtResult.Location = new System.Drawing.Point(21, 109);
-            this.txtResult.Multiline = true;
-            this.txtResult.Name = "txtResult";
-            this.txtResult.ReadOnly = true;
-            this.txtResult.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtResult.Size = new System.Drawing.Size(748, 329);
-            this.txtResult.TabIndex = 0;
             // 
             // txtPrompt
             // 
@@ -79,16 +69,25 @@ namespace OpenAPI_Call
             this.chkDumpClass.Text = "Debug";
             this.chkDumpClass.UseVisualStyleBackColor = true;
             // 
+            // txtResult2
+            // 
+            this.txtResult2.Location = new System.Drawing.Point(21, 114);
+            this.txtResult2.Name = "txtResult2";
+            this.txtResult2.ReadOnly = true;
+            this.txtResult2.Size = new System.Drawing.Size(748, 451);
+            this.txtResult2.TabIndex = 4;
+            this.txtResult2.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(800, 460);
+            this.ClientSize = new System.Drawing.Size(800, 585);
+            this.Controls.Add(this.txtResult2);
             this.Controls.Add(this.chkDumpClass);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.txtPrompt);
-            this.Controls.Add(this.txtResult);
             this.Name = "Form1";
             this.Text = "Open API Demo v .03";
             this.ResumeLayout(false);
@@ -97,11 +96,10 @@ namespace OpenAPI_Call
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox txtResult;
         private System.Windows.Forms.TextBox txtPrompt;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.CheckBox chkDumpClass;
+        private System.Windows.Forms.RichTextBox txtResult2;
     }
 }
 

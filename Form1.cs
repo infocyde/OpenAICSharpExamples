@@ -21,12 +21,12 @@ namespace OpenAPI_Call
         async void MakeChatCall()
         {
             btnSend.Text = "Sending...";
-            this.txtResult.Text = "";
+            this.txtResult2.Text = "";
             btnSend.Update();
-            txtResult.Update();
+            txtResult2.Update();
             using(OpenAI oa = new OpenAI())
             {
-                oa.MessageRaised += (sender, message) => { this.txtResult.Text += message; this.txtResult.Update(); } ;
+                oa.MessageRaised += (sender, message) => { this.txtResult2.Text += message; this.txtResult2.Update(); } ;
                 await oa.SimpleChatCall2(this.txtPrompt.Text, this.chkDumpClass.Checked);
             }
             btnSend.Text = "Sent!";
