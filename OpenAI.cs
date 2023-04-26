@@ -69,8 +69,8 @@ namespace OpenAPI_Call
             {
                 new Dictionary<string, string>()
                 {
-                    { "role", "system" },
-                    { "content", "You are a helpful assistant." }
+                    { "role", "assistant" },
+                    { "content", "You are a sarcastic arrogant hacker, but helpful." }
                 },
                 new Dictionary<string, string>()
                 {
