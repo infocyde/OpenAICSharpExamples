@@ -22,7 +22,7 @@ namespace OpenAPI_Call
         {
             if (!string.IsNullOrEmpty(str))
             {
-                return str.Replace("  ", " ").Replace(". ", "").Replace(", ", "");
+                return str.Replace("  ", " ").Replace(". ", ".").Replace(", ",",");
             }
             return str;
         }
