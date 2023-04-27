@@ -17,8 +17,19 @@ namespace OpenAPI_Call
                 return str.Replace("\\n", Environment.NewLine);
             return str;
         }
+
+        public static string compact(this string str)
+        {
+            if (!string.IsNullOrEmpty(str))
+            {
+                return str.Replace("  ", " ").Replace(". ", "").Replace(", ", "");
+            }
+            return str;
+        }
     }
 
+
+   
 
 
     public static class Utility

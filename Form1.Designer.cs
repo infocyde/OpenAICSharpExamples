@@ -79,7 +79,7 @@ namespace OpenAPI_Call
             this.txtResult2.ReadOnly = true;
             this.txtResult2.Size = new System.Drawing.Size(748, 451);
             this.txtResult2.TabIndex = 4;
-            this.txtResult2.Text = "oh look another human.  How can I be of service meat puppet?";
+            this.txtResult2.Text = "";
             // 
             // pictureBox1
             // 
@@ -105,6 +105,7 @@ namespace OpenAPI_Call
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Open API Demo v .03";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

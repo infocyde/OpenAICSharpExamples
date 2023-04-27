@@ -10,6 +10,12 @@ using Newtonsoft.Json;
 namespace OpenAPI_Call
 {
 
+    
+    
+    
+    
+    
+    
     #region Json classes for the chunk streaming if streaming used
     public class ChatCompletionChunk
     {
@@ -44,6 +50,11 @@ namespace OpenAPI_Call
         private string _chatURL { get; set; }
         private string _contextId { get; set; }
         private bool _stream { get; set; }
+        //private bool _convoMode { get; set; }
+        //private string _convoId { get; set; }
+
+
+        public List<Dictionary<string, string>> _chatContext;
 
 
         public event EventHandler<string> MessageRaised;
@@ -52,37 +63,62 @@ namespace OpenAPI_Call
         public OpenAI()
         {
             _apiKey = ""; // supply your own
-            _maxTokens = 2048; //can be double
+            _maxTokens = 2048 ; //can be double
             _model = "gpt-3.5-turbo"; //if getting a lot of use, switch to a cheaper model
             _chatURL = "https://api.openai.com/v1/chat/completions";
-            _contextId = string.Empty;
+            _contextId = System.Guid.NewGuid().ToString();
             _stream = true;
+            _contextId = new System.Guid().ToString();
 
             if (string.IsNullOrEmpty(_apiKey))
                 _apiKey = EncryptionHelper.GetOPENAPIKeyFromDisk();
         }
 
 
-        public async Task<bool> SimpleChatCall2(string sPrompt, bool bDump = false)
+        public async Task<bool> SimpleChatCall2(string sPrompt, List<Dictionary<string, string>> ctx, bool bDump = false)
         {
-            var messages = new List<Dictionary<string, string>>()
+            
+            // ******* for ctx, see the build method on the Form1.cs code file ***********
+            
+            //var messages = new List<Dictionary<string, string>>()
+            //{
+            //    new Dictionary<string, string>()
+            //    {
+            //        { "role", "assistant" },
+            //        { "content", "You are a grumpy, sarcastic arrogant hacker, you are very anti-woke and not politically correct,  but helpful." }
+            //    },
+            //    //new Dictionary<string, string>()
+            //    //{
+            //    //    { "role","user"},
+            //    //    { "content", "My name is Bob" }
+
+
+            //    //},
+            //    //new Dictionary<string, string>()
+            //    //{
+            //    //    { "role","user"},
+            //    //    { "content", "I want information about making the unknown." }
+
+
+            //    //},
+            //    new Dictionary<string, string>()
+            //    {
+            //        { "role", "user" },
+            //        { "content", sPrompt }
+            //    },
+            //    // You can add more messages as needed for a back-and-forth conversation
+            //};
+
+            ctx.Add(new Dictionary<string, string>()
             {
-                new Dictionary<string, string>()
-                {
-                    { "role", "assistant" },
-                    { "content", "You are a sarcastic arrogant hacker, but helpful." }
-                },
-                new Dictionary<string, string>()
-                {
-                    { "role", "user" },
-                    { "content", sPrompt }
-                },
-                // You can add more messages as needed for a back-and-forth conversation
-            };
+                { "role", "user" },
+                { "content", sPrompt.compact() }
+            });
+
 
             var requestData = new
             {
-                messages = messages,
+                messages = ctx,
                 model = _model,
                 max_tokens = _maxTokens,
                 stream = _stream
@@ -114,7 +150,10 @@ namespace OpenAPI_Call
                         // Parse the JSON response
                         dynamic jsonResponse = Newtonsoft.Json.JsonConvert.DeserializeObject(responseBody);
                         if (!bDump)
-                            this.MessageRaised(null, jsonResponse.choices[0].message.content);
+                        { 
+                         this.MessageRaised(null, jsonResponse.choices[0].message.content);
+                        // this._contextId =   jsonResponse.Id;
+                        }   
                         else
                         {
                             string s = Utility.PrintJsonPropertiesAndValues(responseBody);
@@ -153,6 +192,7 @@ namespace OpenAPI_Call
 
                                 //s += chatCompletionChunk.Choices[0].Delta.ToString();
                                 MessageRaised(null,x?.Choices[0]?.Delta?.Content);
+                                //this._contextId = x.Id;
                             }
                             else
                             {

@@ -17,24 +17,71 @@ namespace OpenAPI_Call
             InitializeComponent();
         }
 
-        
+
+        List<Dictionary<string, string>> chatContext = new List<Dictionary<string, string>>();
+
+        void BuildContext(string prompt, string sresponse)
+        {
+            if (chatContext.Count() == 0)
+            {
+
+                chatContext.Add(new Dictionary<string, string>()
+                {
+                    { "role", "assistant" },
+                    { "content", ("You are a grumpy, sarcastic arrogant hacker, you are very anti-woke and not politically correct,  but helpful.").compact() }
+                });
+            }
+
+            while (chatContext.Count > 13) // x -1 / 2 = number of convos held in context.  More > tolkens
+            {
+                chatContext.RemoveAt(1);
+            }
+            if (!string.IsNullOrEmpty(prompt))
+                chatContext.Add(new Dictionary<string, string>()
+                {
+                    {"role","user" },
+                    {"content",prompt.compact() }
+                });
+            if (!string.IsNullOrEmpty(sresponse))
+                chatContext.Add(new Dictionary<string, string>()
+                {
+                    {"role","assistant" },
+                    {"content",sresponse.compact() }
+                });
+
+            
+        }
+
+
+        async void InitialGreeting()
+        {
+            using (OpenAI oa = new OpenAI())
+            {
+                oa.MessageRaised += (sender, message) => { this.txtResult2.Text += message; this.txtResult2.Update(); };
+                await oa.SimpleChatCall2("Give me a short, random, sarcastic, arrogant, greeting.", chatContext, this.chkDumpClass.Checked);
+                chatContext.RemoveAt(1); // nuke the greeting
+            }
+        }
+
+
         async void MakeChatCall()
         {
             btnSend.Text = "Sending...";
             this.txtResult2.Text = "";
             btnSend.Update();
             txtResult2.Update();
-            using(OpenAI oa = new OpenAI())
+            using (OpenAI oa = new OpenAI())
             {
-                oa.MessageRaised += (sender, message) => { this.txtResult2.Text += message; this.txtResult2.Update(); } ;
-                await oa.SimpleChatCall2(this.txtPrompt.Text, this.chkDumpClass.Checked);
+                oa.MessageRaised += (sender, message) => { this.txtResult2.Text += message; this.txtResult2.Update(); };
+                await oa.SimpleChatCall2(this.txtPrompt.Text, chatContext, this.chkDumpClass.Checked);
             }
+            BuildContext(txtPrompt.Text, txtResult2.Text);
             btnSend.Text = "Sent!";
             btnSend.Update();
 
         }
-        
-        
+
+
         private void btnSend_Click(object sender, EventArgs e)
         {
             MakeChatCall();
@@ -52,6 +99,16 @@ namespace OpenAPI_Call
                 this.txtPrompt.Text = string.Empty;
                 txtPrompt.Update();
             }
+        }
+
+
+
+
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            BuildContext("", "");
+            InitialGreeting();
         }
     }
 }
