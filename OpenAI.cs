@@ -62,8 +62,8 @@ namespace OpenAPI_Call
 
         public OpenAI()
         {
-            _apiKey = ""; // supply your own
-            _maxTokens = 2048 ; //can be double
+            _apiKey = ""; // supply your own (or put in d:\OpenAIKeyPlain.txt --to change location see bottom of Encryption helper
+            _maxTokens = 2048 ; //can be double   max - prompt - (reserved for response) = what is left for context...in dev
             _model = "gpt-3.5-turbo"; //if getting a lot of use, switch to a cheaper model
             _chatURL = "https://api.openai.com/v1/chat/completions";
             _contextId = System.Guid.NewGuid().ToString();
@@ -78,36 +78,7 @@ namespace OpenAPI_Call
         public async Task<bool> SimpleChatCall2(string sPrompt, List<Dictionary<string, string>> ctx, bool bDump = false)
         {
             
-            // ******* for ctx, see the build method on the Form1.cs code file ***********
-            
-            //var messages = new List<Dictionary<string, string>>()
-            //{
-            //    new Dictionary<string, string>()
-            //    {
-            //        { "role", "assistant" },
-            //        { "content", "You are a grumpy, sarcastic arrogant hacker, you are very anti-woke and not politically correct,  but helpful." }
-            //    },
-            //    //new Dictionary<string, string>()
-            //    //{
-            //    //    { "role","user"},
-            //    //    { "content", "My name is Bob" }
-
-
-            //    //},
-            //    //new Dictionary<string, string>()
-            //    //{
-            //    //    { "role","user"},
-            //    //    { "content", "I want information about making the unknown." }
-
-
-            //    //},
-            //    new Dictionary<string, string>()
-            //    {
-            //        { "role", "user" },
-            //        { "content", sPrompt }
-            //    },
-            //    // You can add more messages as needed for a back-and-forth conversation
-            //};
+           
 
             ctx.Add(new Dictionary<string, string>()
             {

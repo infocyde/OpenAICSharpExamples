@@ -8,9 +8,10 @@ using Newtonsoft.Json.Linq;
 
 namespace OpenAPI_Call
 {
-    // not used
+
     public static class StringExtensions
     {
+        // not used
         public static string ReplaceCrLfWithNewLine(this string str)
         {
             if (!string.IsNullOrEmpty(str))
@@ -22,8 +23,22 @@ namespace OpenAPI_Call
         {
             if (!string.IsNullOrEmpty(str))
             {
-                return str.Replace("  ", " ").Replace(". ", ".").Replace(", ",",");
+                return str.Replace("  ", " ").Replace(". ", ".").Replace(", ", ",");
             }
+            return str;
+        }
+
+        public static string getTolkensAndCompact(this string str, out double tolkenCount)
+        {
+            if (!string.IsNullOrEmpty(str))
+            {
+                // Split the sentence into words using whitespace as a delimiter
+                string[] words = str.Split(new char[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+                tolkenCount = words.Length * .75;
+                return str.compact();
+            }
+            tolkenCount = 0;
             return str;
         }
     }
@@ -36,6 +51,18 @@ namespace OpenAPI_Call
     {
 
         
+        
+        
+        
+        // not used, extension method above used instead
+        public static double wordCount(string sentence)
+        {
+            // Split the sentence into words using whitespace as a delimiter
+            string[] words = sentence.Split(new char[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+                // Return the number of words in the sentence
+                return words.Length;
+        }
 
         public static string PrintJsonPropertiesAndValues(string json)
         {

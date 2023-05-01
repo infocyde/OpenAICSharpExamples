@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>infocyde_cyberpunk_hacker_of_the_future_illustrated_drawing_vec_4445c8f4-7446-4133-8fa6-7c3145d2c16a.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -89,6 +92,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\infocyde_cyberpunk_hacker_of_the_future_illustrated_drawing_vec_4445c8f4-7446-4133-8fa6-7c3145d2c16a.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="infocyde_cyberpunk_hacker_of_the_future_illustrated_drawing_vec_4445c8f4-7446-4133-8fa6-7c3145d2c16a.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
