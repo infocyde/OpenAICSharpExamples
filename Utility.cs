@@ -11,13 +11,7 @@ namespace OpenAPI_Call
 
     public static class StringExtensions
     {
-        // not used
-        public static string ReplaceCrLfWithNewLine(this string str)
-        {
-            if (!string.IsNullOrEmpty(str))
-                return str.Replace("\\n", Environment.NewLine);
-            return str;
-        }
+        
 
         public static string compact(this string str)
         {
@@ -28,17 +22,17 @@ namespace OpenAPI_Call
             return str;
         }
 
-        public static string getTolkensAndCompact(this string str, out double tolkenCount)
+        public static string getTolkensAndCompact(this string str, out double tokens)
         {
             if (!string.IsNullOrEmpty(str))
             {
                 // Split the sentence into words using whitespace as a delimiter
                 string[] words = str.Split(new char[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
-                tolkenCount = words.Length * .75;
+                tokens = words.Length * 1.3; // 1.3 being a guestimate.  ChatGPT says 1.2-1.5 on average with a sentence and punctuation
                 return str.compact();
             }
-            tolkenCount = 0;
+            tokens = 0;
             return str;
         }
     }
