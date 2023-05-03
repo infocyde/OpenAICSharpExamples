@@ -123,12 +123,14 @@ namespace OpenAPI_Call
                         if (!bDump)
                         { 
                          this.MessageRaised(null, jsonResponse.choices[0].message.content);
-                        // this._contextId =   jsonResponse.Id;
+                            // this._contextId =   jsonResponse.Id;
+                            Logger.AppendChatLog(sPrompt, jsonResponse.choices[0].message.content);
                         }   
                         else
                         {
                             string s = Utility.PrintJsonPropertiesAndValues(responseBody);
                             this.MessageRaised(null,s);
+                            Logger.AppendChatLog(sPrompt, s);
                         }
 
                         // Process the completion as needed
@@ -164,13 +166,16 @@ namespace OpenAPI_Call
                                 //s += chatCompletionChunk.Choices[0].Delta.ToString();
                                 MessageRaised(null,x?.Choices[0]?.Delta?.Content);
                                 //this._contextId = x.Id;
+                                s += x?.Choices[0]?.Delta?.Content;
                             }
                             else
                             {
                                 MessageRaised(null, jsonString);
+                                s += jsonString;
                             }
 
                         }
+                    Logger.AppendChatLog(sPrompt, s);
 
                    
                 }
