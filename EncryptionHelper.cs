@@ -93,4 +93,11 @@ public static class EncryptionHelper
     {
         return File.ReadAllText(@"d:\OpenAIKeyPlain.txt");
     }
+
+
+    // I'm a bozo, so I want to load the API key from a file outside the git repo
+    public static string GetElevelLabsAPIKeyFromDisk()
+    {
+        return File.ReadAllText(@"d:\ElevenLabsKeyPlain.txt");
+    }
 }

@@ -45,6 +45,7 @@ namespace OpenAPI_Call
     public class OpenAI : IDisposable
     {
         private string _apiKey { get; set; }
+        private string _elevenLabsAPIKey { get; set; }
         private int _maxTokens { get; set; }
         private string _model { get; set; }
         private string _chatURL { get; set; }
@@ -72,6 +73,8 @@ namespace OpenAPI_Call
 
             if (string.IsNullOrEmpty(_apiKey))
                 _apiKey = EncryptionHelper.GetOPENAPIKeyFromDisk();
+            if (string.IsNullOrEmpty(_elevenLabsAPIKey))
+                _elevenLabsAPIKey = EncryptionHelper.GetElevelLabsAPIKeyFromDisk();
         }
 
 
