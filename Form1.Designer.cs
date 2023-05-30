@@ -35,6 +35,7 @@ namespace OpenAPI_Call
             this.chkDumpClass = new System.Windows.Forms.CheckBox();
             this.txtResult2 = new System.Windows.Forms.RichTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btn_Reset = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -91,12 +92,24 @@ namespace OpenAPI_Call
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
             // 
+            // btn_Reset
+            // 
+            this.btn_Reset.BackColor = System.Drawing.Color.DarkKhaki;
+            this.btn_Reset.Location = new System.Drawing.Point(811, 31);
+            this.btn_Reset.Name = "btn_Reset";
+            this.btn_Reset.Size = new System.Drawing.Size(133, 37);
+            this.btn_Reset.TabIndex = 6;
+            this.btn_Reset.Text = "Reset Conversation";
+            this.btn_Reset.UseVisualStyleBackColor = false;
+            this.btn_Reset.Click += new System.EventHandler(this.btn_Reset_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(800, 585);
+            this.ClientSize = new System.Drawing.Size(956, 585);
+            this.Controls.Add(this.btn_Reset);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.txtResult2);
             this.Controls.Add(this.chkDumpClass);
@@ -118,6 +131,7 @@ namespace OpenAPI_Call
         private System.Windows.Forms.CheckBox chkDumpClass;
         private System.Windows.Forms.RichTextBox txtResult2;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button btn_Reset;
     }
 }
 

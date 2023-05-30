@@ -53,13 +53,27 @@ namespace OpenAPI_Call
         }
 
 
+        async void ResetConversation()
+        {
+            this.txtPrompt.Text = string.Empty;
+            this.txtPrompt.Update();
+            this.txtResult2.Text = string.Empty;
+            this.txtResult2.Update();
+            this.chatContext.Clear();
+            BuildContext("Hello",""); 
+            InitialGreeting();
+
+        }
+
         async void InitialGreeting()
         {
             using (OpenAI oa = new OpenAI())
             {
+                Logger.AppendChatLog("New Conversation " + DateTime.Now.ToString() + "\\n----\\n\\nn ", "");
                 oa.MessageRaised += (sender, message) => { this.txtResult2.Text += message; this.txtResult2.Update(); };
                 await oa.SimpleChatCall2("Give me a short, random, sarcastic, arrogant, greeting.", chatContext, this.chkDumpClass.Checked);
-                chatContext.RemoveAt(1); // nuke the greeting
+                if (chatContext.Count() > 1)
+                    chatContext.RemoveAt(1); // nuke the greeting
             }
         }
 
@@ -109,6 +123,11 @@ namespace OpenAPI_Call
         {
             BuildContext("", "");
             InitialGreeting();
+        }
+
+        private void btn_Reset_Click(object sender, EventArgs e)
+        {
+            ResetConversation();
         }
     }
 }
