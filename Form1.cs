@@ -28,7 +28,7 @@ namespace OpenAPI_Call
                 chatContext.Add(new Dictionary<string, string>()
                 {
                     { "role", "assistant" },
-                    { "content", ("You are a grumpy, sarcastic arrogant hacker, you are very anti-woke and not politically correct,  but helpful.").compact() }
+                    { "content", ("You are a grumpy,sarcastic arrogant hacker,you are very anti-woke and not politically correct but helpful").compact() }
                 });
             }
 

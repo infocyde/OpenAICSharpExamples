@@ -64,8 +64,8 @@ namespace OpenAPI_Call
         public OpenAI()
         {
             _apiKey = ""; // supply your own (or put in d:\OpenAIKeyPlain.txt --to change location see bottom of Encryption helper
-            _maxTokens = 2048 ; //can be double   max - prompt - (reserved for response) = what is left for context...in dev
-            _model = "gpt-3.5-turbo"; //if getting a lot of use, switch to a cheaper model
+            _maxTokens = 16000;//2048 ; //can be double   max - prompt - (reserved for response) = what is left for context...in dev
+            _model = "gpt-3.5-turbo-16k";//"gpt-3.5-turbo"; //if getting a lot of use, switch to a cheaper model
             _chatURL = "https://api.openai.com/v1/chat/completions";
             _contextId = System.Guid.NewGuid().ToString();
             _stream = true;
@@ -73,8 +73,8 @@ namespace OpenAPI_Call
 
             if (string.IsNullOrEmpty(_apiKey))
                 _apiKey = EncryptionHelper.GetOPENAPIKeyFromDisk();
-            if (string.IsNullOrEmpty(_elevenLabsAPIKey))
-                _elevenLabsAPIKey = EncryptionHelper.GetElevelLabsAPIKeyFromDisk();
+            //if (string.IsNullOrEmpty(_elevenLabsAPIKey))
+            //    _elevenLabsAPIKey = EncryptionHelper.GetElevelLabsAPIKeyFromDisk();
         }
 
 
